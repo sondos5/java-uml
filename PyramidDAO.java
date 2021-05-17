@@ -1,54 +1,49 @@
-/*
+	/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package file;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  *
  * @author Sondos
  */
-public class PyramidDAO {
-    public PyramidDAO(){
+public class PyramidDAO implements pyramid_read{
+    PyramidDAO(){
         
     }
-    public List<Pyramid> readPyramid(String cUsersSondosDownloadsarchivepyramidscsv) throws FileNotFoundException, IOException{
-        List<Pyramid> list; 
-        list = new ArrayList<>();
-        //return list;
+    public List<Pyramid> readPyramid(String filename) throws FileNotFoundException, IOException{
+        List<Pyramid> Pyramids; 
+        Pyramids = new ArrayList<>();
+        String[] fields= new String[0];
         BufferedReader br;
-        br = new BufferedReader(new FileReader("C:\\Users\\Sondos\\Downloads\\archive\\pyramids.csv"));
+        br = new BufferedReader(new FileReader(filename));
         String line = br.readLine();
         if (line!=null){
             System.out.println( line);
-        
-    }
+        }
         do{
             line = br.readLine();
             if (line!=null){
-                String[] fields = line.split(",");
-                for (String part:fields){
-                    System.out.println( part);
-                    //Pyramid list = new Pyramid(part[0],part[1],part[2],Double.parseDouble([3]);
-                    //Pyramid.add(pr);
+                fields = line.split(",");
+                if (fields[7].equals("")) {
+                    fields[7]="0.0";
+                    Pyramid pr = new Pyramid(fields[0],fields[2],fields[4],Double.parseDouble(fields[7]));
+                    Pyramids.add(pr);
+                    System.out.println( Pyramids);
                     
                 }
+                } else {
+                            // System.out.println( part);          
             }
         }while (line !=null);
         br.close();
-        return list;
-        
-        
+        return Pyramids;
     }
-
-    
+        
     
 }
+
